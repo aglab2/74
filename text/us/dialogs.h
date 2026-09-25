@@ -93,7 +93,7 @@ Whaddya say? When I say\n\
 \n\
 Ready....\n\
 \n\
-//Go!////Don't Go"))
+\tGo!\t\tDon't Go"))
 
 DEFINE_DIALOG(DIALOG_006,1,3,30,200, _("Warning!\n\
 A lot of skill is needed\n\
@@ -129,7 +129,7 @@ Another race!\n\
 And this time I will be\n\
 the one who cheats!\n\
 \n\
-//Go//// Don't Go"))
+\tGo\t\t Don't Go"))
 
 DEFINE_DIALOG(DIALOG_010,1,5,30,200, _("You activated the red\n\
 switch! Now you can\n\
@@ -140,7 +140,7 @@ Did you see the red\n\
 \n\
 Would you like to save?\n\
 \n\
-//Yes////No"))
+\tYes\t\tNo"))
 
 DEFINE_DIALOG(DIALOG_011,1,4,30,200, _("You activated the\n\
 metal cap. It makes\n\
@@ -153,7 +153,7 @@ might be useful?\n\
 \n\
 Would you like to save?\n\
 \n\
-//Yes////No"))
+\tYes\t\tNo"))
 
 DEFINE_DIALOG(DIALOG_012,1,4,30,200, _("The vanish cap is now\n\
 activated. Now turn\n\
@@ -162,21 +162,21 @@ scare other people.\n\
 \n\
 Would you like to save?\n\
 \n\
-//Yes////No"))
+\tYes\t\tNo"))
 
 DEFINE_DIALOG(DIALOG_013,1,6,30,200, _("You've collected 100\n\
 coins! Mario gains\n\
 a star from Toad.\n\
 Do you want to save?\n\
 \n\
-//Yes////No"))
+\tYes\t\tNo"))
 
 DEFINE_DIALOG(DIALOG_014,1,6,30,200, _("OMG! A star!\n\
 Never seen that before!\n\
 Do you still have\n\
 the urge to save?\n\
 \n\
-//You Bet//Not Now"))
+\tYou Bet\tNot Now"))
 
 DEFINE_DIALOG(DIALOG_015,1,4,30,200, _("It is recommended to\n\
 use Mario's perspective\n\
@@ -548,7 +548,7 @@ you know. Whaddya say?\n\
 How about a race?\n\
 Ready...\n\
 \n\
-//Go//// Don't Go"))
+\tGo\t\t Don't Go"))
 
 DEFINE_DIALOG(DIALOG_056,1,6,30,200, _("Mysterious Hidden Object\n\
 1 of 5\n\
@@ -917,7 +917,7 @@ I'll give you something\n\
 really good.\n\
 So, how about it?\n\
 \n\
-//Free him/ Hold on"))
+\tFree him/ Hold on"))
 
 DEFINE_DIALOG(DIALOG_080,1,1,30,200, _("80"))
 
@@ -1554,7 +1554,7 @@ buddy.\n\
 Whaddya say?\n\
 Ready...set...\n\
 \n\
-//Go//// Don't Go"))
+\tGo\t\t Don't Go"))
 
 DEFINE_DIALOG(DIALOG_165,1,5,30,200, _("165"))
 
