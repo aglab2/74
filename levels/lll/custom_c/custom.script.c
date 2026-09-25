@@ -153,10 +153,6 @@ OBJECT_WITH_ACTS(137,949,-672,6221,0,0,0,0x0, bhvExclamationBox,32),
 OBJECT_WITH_ACTS(217,-585,-299,-4606,0,0,0,0x0, bhvPushableMetalBox,31),
 OBJECT_WITH_ACTS(217,-585,-300,-4313,0,0,0,0x0, bhvPushableMetalBox,31),
 OBJECT_WITH_ACTS(217,-289,-300,-4606,0,0,0,0x0, bhvPushableMetalBox,31),
-OBJECT_WITH_ACTS(0,0,0,0,0,0,0,0x0, bhvStarDoor,31),
-OBJECT_WITH_ACTS(0,0,0,0,0,0,0,0x0, bhvStarDoor,31),
-OBJECT_WITH_ACTS(0,0,0,0,0,0,0,0x0, bhvStarDoor,31),
-OBJECT_WITH_ACTS(0,0,0,0,0,0,0,0x0, bhvStarDoor,31),
 RETURN()
 };
 const LevelScript local_warps_lll_1_[] = {
