@@ -27,7 +27,7 @@
 
 #include "hacktice/main.h"
 
-#define STARS_TO_ENABLE_HACKTICE 0
+#define STARS_TO_ENABLE_HACKTICE 151
 
 u16 gDialogColorFadeTimer;
 s8 gLastDialogLineNum;

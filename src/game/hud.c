@@ -482,7 +482,7 @@ void render_hud_timer(void) {
     else
         sprintf(str, "%0d'%02d\"%02d", timerMins, timerSecs, timerFracMSecs);
 
-    print_text_aligned(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(150), 185, str, TEXT_ALIGN_RIGHT);
+    print_text_aligned(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(300), 205, str, TEXT_ALIGN_RIGHT);
 }
 
 /**
