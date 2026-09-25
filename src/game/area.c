@@ -318,6 +318,7 @@ void load_area(s32 index) {
      || gCurrCourseNum == COURSE_RR
      || gCurrCourseNum == COURSE_BITS
      || gCurrCourseNum == COURSE_SL
+     || gCurrCourseNum == COURSE_CCM
      || gCurrLevelNum == LEVEL_CASTLE)
         mode = 7;
 
