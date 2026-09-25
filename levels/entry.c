@@ -7,7 +7,7 @@
 
 #include "make_const_nonconst.h"
 
-#define TEST_LEVEL LEVEL_BITFS
+#define TEST_LEVEL LEVEL_TOTWC
 
 extern const LevelScript level_main_scripts_entry[];
 const LevelScript level_script_entry[] = {
