@@ -66,7 +66,6 @@ JUMP_LINK(script_func_global_16),
         SET_BACKGROUND_MUSIC(0,33),
         TERRAIN_TYPE(0),
 
-#if 0
         OBJECT_WITH_ACTS(0,134,-1008,-4345,0,0,0,0x0, bhvSpinAirborneWarp,31),
         OBJECT_WITH_ACTS(0,31,-1223,2016,0,-154,0,0xa0000, bhvInstantActiveWarp,31),
         OBJECT_WITH_ACTS(22,1827,-1264,-4786,0,-153,0,0x50000, bhvWarpPipe,31),
@@ -250,7 +249,6 @@ JUMP_LINK(script_func_global_16),
         WARP_NODE(4,13,1,10,0),
         WARP_NODE(5,31,1,0,0),
         WARP_NODE(6,26,1,0,0),
-#endif
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 	FREE_LEVEL_POOL(),
