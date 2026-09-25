@@ -1276,6 +1276,7 @@ static Vtx DL_totwc_1_0xe00bbc0_6_vtxopt[] = {
 };
 
 Gfx DL_totwc_1_0xe00bbc0[] = {
+gsSPClipRatio(1),
 gsDPPipeSync(),
 gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE,TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE),
 gsDPSetTile(0, 2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0),
@@ -1662,6 +1663,7 @@ gsDPSetTileSize(0, 0, 0, 124, 124),
 	gsSP2Triangles(50, 51, 52, 0, 50, 52, 51, 0),
 	gsSP2Triangles(53, 54, 55, 0, 53, 55, 54, 0),
 gsSPTexture(65535, 65535, 0, 0, 0),
+gsSPClipRatio(2),
 gsSPEndDisplayList(),
 };
 
