@@ -13,4 +13,5 @@
 
 #include "levels/wf/header.h"
 
-#include "levels/wf/geo.inc.c"
+#include "levels/wf/custom_c/custom.geo.inc.c"
+

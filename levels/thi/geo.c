@@ -13,4 +13,5 @@
 
 #include "levels/thi/header.h"
 
-#include "levels/thi/geo.inc.c"
+#include "levels/thi/custom_c/custom.geo.inc.c"
+

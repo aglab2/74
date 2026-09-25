@@ -93,6 +93,7 @@ void fail_warp_drop_last_safe_pos()
 
 void fail_warp_pre_level_trigger_warp(struct MarioState *m, s32* warpOp)
 {
+    return;
     if (!sSafePosLevel)
     {
         return;

@@ -29,7 +29,6 @@
 #include "engine/surface_load.h"
 #include "object_list_processor.h"
 #include "behavior_data.h"
-#include "engine/gut.h"
 
 #include "debug_box.h"
 
@@ -456,7 +455,7 @@ static void render_box(Gfx **gfx, int index) {
     if (mtx == NULL) return;
 
     // Calculate rotation matrix
-    guRotateYF(mtxFloat, box->yaw);
+    guRotateF(mtxFloat, ((box->yaw / (f32)0x10000) * 360.0f), 0, 1.0f, 0);
 
     // Apply scale to column vectors of matrix
     for (int i = 0; i < 3; i++) {

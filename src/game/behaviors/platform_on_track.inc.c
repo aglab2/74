@@ -27,11 +27,11 @@ static Collision const *sPlatformOnTrackCollisionModels[] = {
 static Trajectory const *sPlatformOnTrackPaths[] = {
     rr_seg7_trajectory_0702EC3C,
     rr_seg7_trajectory_0702ECC0,
-    ccm_seg7_trajectory_ropeway_lift,
+    NULL /*ccm_seg7_trajectory_ropeway_lift*/,
     bitfs_seg7_trajectory_070159AC,
-    hmc_seg7_trajectory_checkerboard_platform,
-    lll_seg7_trajectory_0702856C,
-    lll_seg7_trajectory_07028660,
+    NULL /*hmc_seg7_trajectory_checkerboard_platform*/,
+    NULL /*lll_seg7_trajectory_0702856C*/,
+    NULL /*lll_seg7_trajectory_07028660*/,
     rr_seg7_trajectory_0702ED9C,
     rr_seg7_trajectory_0702EEE0,
 };

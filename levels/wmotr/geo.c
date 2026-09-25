@@ -13,4 +13,5 @@
 
 #include "levels/wmotr/header.h"
 
-#include "levels/wmotr/geo.inc.c"
+#include "levels/wmotr/custom_c/custom.geo.inc.c"
+

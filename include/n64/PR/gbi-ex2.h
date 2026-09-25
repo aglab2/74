@@ -3156,10 +3156,20 @@ typedef union {
 #define	gDPSetBlendMask(pkt, mask)      gDPNoOp(pkt)
 #define	gsDPSetBlendMask(mask)		gsDPNoOp()
 
-#define	gDPSetAlphaCompare(pkt, type)	\
-	gSPSetOtherMode(pkt, G_SETOTHERMODE_L, G_MDSFT_ALPHACOMPARE, 2, type)
-#define	gsDPSetAlphaCompare(type)		\
-	gsSPSetOtherMode(G_SETOTHERMODE_L, G_MDSFT_ALPHACOMPARE, 2, type)
+#if 0
+#define gDPSetAlphaCompare(pkt, type)   \
+    gSPSetOtherMode(pkt, G_SETOTHERMODE_L, G_MDSFT_ALPHACOMPARE, 2, type)
+#define gsDPSetAlphaCompare(type)       \
+    gsSPSetOtherMode(    G_SETOTHERMODE_L, G_MDSFT_ALPHACOMPARE, 2, type)
+#else
+#define gDPSetAlphaCompare(pkt, type) gSPNoOp(pkt)
+#define gsDPSetAlphaCompare(type) gsSPNoOp()
+
+#define gDPSetAlphaCompareReal(pkt, type)   \
+    gSPSetOtherMode(pkt, G_SETOTHERMODE_L, G_MDSFT_ALPHACOMPARE, 2, type)
+#define gsDPSetAlphaCompareReal(type)       \
+    gsSPSetOtherMode(    G_SETOTHERMODE_L, G_MDSFT_ALPHACOMPARE, 2, type)
+#endif
 
 #define	gDPSetDepthSource(pkt, src)	\
 	gSPSetOtherMode(pkt, G_SETOTHERMODE_L, G_MDSFT_ZSRCSEL, 1, src)
@@ -4873,6 +4883,9 @@ typedef union {
 #define	gsDPNoOp()		gsDPNoParam(G_NOOP)
 #define	gDPNoOpTag(pkt, tag)	gDPParam(pkt, G_NOOP, tag)
 #define	gsDPNoOpTag(tag)	gsDPParam(G_NOOP, tag)
+
+#define gSPFlush(...)
+#define _gSPDisplayListRaw(pkt,dl, h) gSPDisplayList(pkt,dl)
 
 #if defined(F3DZEX_GBI_2) || defined(F3DZEX_NON_GBI_2) || defined(L3DZEX_GBI)
 #include "gbi-poslight.h"

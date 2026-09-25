@@ -1018,7 +1018,7 @@ static void cur_obj_move_xz(f32 steepSlopeNormalY, s32 careAboutEdgesAndSteepSlo
 }
 
 static void cur_obj_move_update_underwater_flags(void) {
-    f32 decelY = (f32)(sqrtf(o->oVelY * o->oVelY) * (o->oDragStrength * 7.0f)) / 100.0f;
+    f32 decelY = (f32)(sqrtf(o->oVelY * o->oVelY) * (o->oDragStrength * 7.0f)) / 100.0L;
 
     if (o->oVelY > 0) {
         o->oVelY -= decelY;

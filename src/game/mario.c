@@ -1705,6 +1705,11 @@ void queue_rumble_particles(struct MarioState *m) {
 s32 execute_mario_action(UNUSED struct Object *obj) {
     s32 inLoop = TRUE;
 
+    if (gMarioState->flags & (MARIO_WING_CAP | MARIO_METAL_CAP | MARIO_VANISH_CAP))
+    {
+        print_text_fmt_int(20, 20, "%d", gMarioState->capTimer / 30);
+    }
+
     // Updates once per frame:
     vec3f_get_dist_and_angle(gMarioState->prevPos, gMarioState->pos, &gMarioState->moveSpeed, &gMarioState->movePitch, &gMarioState->moveYaw);
     vec3f_get_lateral_dist(gMarioState->prevPos, gMarioState->pos, &gMarioState->lateralSpeed);

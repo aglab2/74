@@ -922,14 +922,30 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
     return FALSE;
 }
 
+extern const BehaviorScript Bhv_Custom_0x00407300[];
 u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 doorAction = ACT_UNINITIALIZED;
 #ifndef UNLOCK_ALL
     u32 saveFlags = save_file_get_flags();
     s16 warpDoorId = (obj->oBehParams >> 24);
 #endif
+    s16 numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
 
     if (m->action == ACT_WALKING || m->action == ACT_DECELERATING) {
+        if (obj->behavior == Bhv_Custom_0x00407300)
+        {      
+            if (numStars < 150) {
+                if (!sDisplayingDoorText) {
+                    set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG, DIALOG_022);
+                }
+                sDisplayingDoorText = TRUE;
+
+                return FALSE;
+            }
+
+            goto openup;
+        }
+
 #ifndef UNLOCK_ALL
         if (warpDoorId == 1 && !(saveFlags & SAVE_FLAG_UNLOCKED_UPSTAIRS_DOOR)) {
             if (!(saveFlags & SAVE_FLAG_HAVE_KEY_2)) {
@@ -962,6 +978,7 @@ u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Obj
 #endif
 
         if (m->action == ACT_WALKING || m->action == ACT_DECELERATING) {
+openup:
             u32 actionArg = should_push_or_pull_door(m, obj) + WARP_FLAG_DOOR_IS_WARP;
 
             if (doorAction == 0) {
@@ -1580,9 +1597,9 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
         m->flags |= capFlag;
 
         switch (capFlag) {
-            case MARIO_VANISH_CAP: capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
-            case MARIO_METAL_CAP:  capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP); break;
-            case MARIO_WING_CAP:   capTime = 1800; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
+            case MARIO_VANISH_CAP: capTime =  900; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
+            case MARIO_METAL_CAP:  capTime =  900; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP); break;
+            case MARIO_WING_CAP:   capTime = 2700; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
         }
 
         if (capTime > m->capTimer) {

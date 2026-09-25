@@ -138,8 +138,8 @@ extern Texture ttc_yellow_triangle[];
  */
 Texture *gMovtexIdToTexture[] = { texture_waterbox_water,     texture_waterbox_mist,
                                   texture_waterbox_jrb_water, texture_waterbox_unknown_water,
-                                  texture_waterbox_lava,      ssl_quicksand,
-                                  ssl_pyramid_sand,           ttc_yellow_triangle };
+                                  texture_waterbox_lava,      NULL /*ssl_quicksand*/,
+                                  NULL /*ssl_pyramid_sand*/,           NULL /*ttc_yellow_triangle*/ };
 
 extern Gfx    castle_grounds_dl_waterfall[];
 extern Movtex castle_grounds_movtex_tris_waterfall[];
@@ -198,7 +198,7 @@ extern Gfx    ssl_dl_pyramid_quicksand_pit_end[];
  * MovtexObjects that have no color attributes per vertex (though the mesh
  * as a whole can have a blend color).
  */
-struct MovtexObject gMovtexNonColored[] = {
+static struct MovtexObject gMovtexNonColored[] = {
     // Inside the pyramid there is a sand pathway with the 5 secrets on it.
     // pathway_front is the highest 'sand fall', pathway_floor is the horizontal sand stream and pathway_side is the lower 'sand fall'.
     { MOVTEX_PYRAMID_SAND_PATHWAY_FRONT, TEX_PYRAMID_SAND_SSL,  8, ssl_movtex_tris_pyramid_sand_pathway_front, ssl_dl_pyramid_sand_pathway_begin,       ssl_dl_pyramid_sand_pathway_end,       ssl_dl_pyramid_sand_pathway_front_end, 0xff, 0xff, 0xff, 0xff, LAYER_TRANSPARENT_INTER },
@@ -230,7 +230,7 @@ struct MovtexObject gMovtexNonColored[] = {
 /**
  * MovtexObjects that have color attributes per vertex.
  */
-struct MovtexObject gMovtexColored[] = {
+static struct MovtexObject gMovtexColored[] = {
     { MOVTEX_SSL_PYRAMID_SIDE,           TEX_QUICKSAND_SSL,    12, ssl_movtex_tris_pyramid_quicksand,          ssl_dl_quicksand_begin,                  ssl_dl_quicksand_end,                  ssl_dl_pyramid_quicksand,              0xff, 0xff, 0xff, 0xff, LAYER_OPAQUE            },
     { MOVTEX_SSL_PYRAMID_CORNER,         TEX_QUICKSAND_SSL,    16, ssl_movtex_tris_pyramid_corners_quicksand,  ssl_dl_quicksand_begin,                  ssl_dl_quicksand_end,                  ssl_dl_pyramid_corners_quicksand,      0xff, 0xff, 0xff, 0xff, LAYER_OPAQUE            },
     { MOVTEX_SSL_COURSE_EDGE,            TEX_QUICKSAND_SSL,    15, ssl_movtex_tris_sides_quicksand,            ssl_dl_quicksand_begin,                  ssl_dl_quicksand_end,                  ssl_dl_sides_quicksand,                0xff, 0xff, 0xff, 0xff, LAYER_OPAQUE            },
@@ -242,7 +242,7 @@ struct MovtexObject gMovtexColored[] = {
 /**
  * Treated identically to gMovtexColored.
  */
-struct MovtexObject gMovtexColored2[] = {
+static struct MovtexObject gMovtexColored2[] = {
     { MOVTEX_SSL_SAND_PIT_OUTSIDE,       TEX_QUICKSAND_SSL,     8, ssl_movtex_tris_quicksand_pit,              ssl_dl_quicksand_pit_begin,              ssl_dl_quicksand_pit_end,              ssl_dl_quicksand_pit,                  0xff, 0xff, 0xff, 0xff, LAYER_OPAQUE            },
     { MOVTEX_SSL_SAND_PIT_PYRAMID,       TEX_PYRAMID_SAND_SSL,  8, ssl_movtex_tris_pyramid_quicksand_pit,      ssl_dl_pyramid_quicksand_pit_begin,      ssl_dl_pyramid_quicksand_pit_end,      ssl_dl_quicksand_pit,                  0xff, 0xff, 0xff, 0xff, LAYER_OPAQUE            },
     { 0x00000000,                        TEXTURE_WATER,         0, NULL,                                       NULL,                                    NULL,                                  NULL,                                  0x00, 0x00, 0x00, 0x00, LAYER_FORCE             },
@@ -486,10 +486,55 @@ extern Movtex wf_movtex_water[];
 extern Movtex castle_courtyard_movtex_star_statue_water[];
 extern Movtex ttm_movtex_puddle[];
 
+extern struct MovtexQuadCollection bob_1_Movtex_0[];
+extern struct MovtexQuadCollection castle_courtyard_1_Movtex_0[];
+extern struct MovtexQuadCollection jrb_1_Movtex_0[];
+extern struct MovtexQuadCollection ccm_1_Movtex_0[];
+extern struct MovtexQuadCollection hmc_1_Movtex_0[];
+extern struct MovtexQuadCollection ddd_1_Movtex_0[];
+extern struct MovtexQuadCollection wdw_1_Movtex_0[];
+extern struct MovtexQuadCollection ssl_1_Movtex_0[];
+extern struct MovtexQuadCollection sl_1_Movtex_0[];
+extern struct MovtexQuadCollection bitfs_1_Movtex_0[];
+
 /**
  * Find the quadCollection for a given quad collection id.
  */
-void *get_quad_collection_from_id(u32 id) {
+static void *get_quad_collection_from_id(u32 id) {
+    if (id == 20480)
+    {
+        switch (gCurrLevelNum)
+        {
+            case LEVEL_BOB:
+                return bob_1_Movtex_0;
+            case LEVEL_CASTLE_COURTYARD:
+                return castle_courtyard_1_Movtex_0;
+            case LEVEL_JRB:
+                return jrb_1_Movtex_0;
+            case LEVEL_CCM:
+                return ccm_1_Movtex_0;
+            case LEVEL_HMC:
+                return hmc_1_Movtex_0;
+            case LEVEL_DDD:
+                return ddd_1_Movtex_0;
+            case LEVEL_WDW:
+                return wdw_1_Movtex_0;
+            case LEVEL_SL:
+                return sl_1_Movtex_0;
+            case LEVEL_SSL:
+                return ssl_1_Movtex_0;
+            case LEVEL_BITFS:
+                return bitfs_1_Movtex_0;
+        }
+    }
+
+    if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS)
+    {
+        return castle_grounds_movtex_water;
+    }
+
+    return NULL;
+#if 0
     switch (id) {
         case BBH_MOVTEX_MERRY_GO_ROUND_WATER_ENTRANCE:
             return bbh_movtex_merry_go_round_water_entrance;
@@ -542,6 +587,7 @@ void *get_quad_collection_from_id(u32 id) {
         default:
             return NULL;
     }
+#endif
 }
 
 /**
@@ -751,6 +797,7 @@ Gfx *movtex_gen_list(s16 *movtexVerts, struct MovtexObject *movtexList, s8 attrL
  * Function for a geo node that draws a MovtexObject in the gMovtexNonColored list.
  */
 Gfx *geo_movtex_draw_nocolor(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtx) {
+    return NULL;
     s32 i;
     s16 *movtexVerts;
     struct GraphNodeGenerated *asGenerated;
@@ -777,6 +824,8 @@ Gfx *geo_movtex_draw_nocolor(s32 callContext, struct GraphNode *node, UNUSED Mat
  * Function for a geo node that draws a MovtexObject in the gMovtexColored list.
  */
 Gfx *geo_movtex_draw_colored(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtx) {
+    return NULL;
+
     s32 i;
     s16 *movtexVerts;
     struct GraphNodeGenerated *asGenerated;
@@ -807,6 +856,8 @@ Gfx *geo_movtex_draw_colored(s32 callContext, struct GraphNode *node, UNUSED Mat
  * increase the more instances there are.
  */
 Gfx *geo_movtex_draw_colored_no_update(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtx) {
+    return NULL;
+
     s32 i;
     s16 *movtexVerts;
     struct GraphNodeGenerated *asGenerated;
@@ -833,6 +884,8 @@ Gfx *geo_movtex_draw_colored_no_update(s32 callContext, struct GraphNode *node, 
  * Used for the sand pits in SSL, both outside and inside the pyramid.
  */
 Gfx *geo_movtex_draw_colored_2_no_update(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtx) {
+    return NULL;
+
     s32 i;
     s16 *movtexVerts;
     struct GraphNodeGenerated *asGenerated;
@@ -867,6 +920,7 @@ Gfx *geo_movtex_draw_colored_2_no_update(s32 callContext, struct GraphNode *node
  * Note that the final TTC only has one big treadmill though.
  */
 Gfx *geo_movtex_update_horizontal(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtx) {
+    return NULL;
     void *movtexVerts;
 
     if (callContext == GEO_CONTEXT_RENDER) {

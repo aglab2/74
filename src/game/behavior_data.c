@@ -1138,6 +1138,25 @@ const BehaviorScript bhvDoor[] = {
     END_LOOP(),
 };
 
+// patched door to open to 150 stars
+const BehaviorScript Bhv_Custom_0x00407300[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    SET_INT(oInteractType, INTERACT_WARP_DOOR),
+    // Door - common:
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, door_seg3_anims_030156C0),
+    ANIMATE(DOOR_ANIM_CLOSED),
+    LOAD_COLLISION_DATA(door_seg3_collision_door),
+    SET_HITBOX(/*Radius*/ 80, /*Height*/ 100),
+    SET_INT(oIntangibleTimer, 0),
+    SET_FLOAT(oCollisionDistance, 1000),
+    SET_HOME(),
+    CALL_NATIVE(bhv_door_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_door_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvGrindel[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
@@ -1928,7 +1947,7 @@ const BehaviorScript bhvBowserKey[] = {
 const BehaviorScript bhvGrandStar[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-    SET_INTERACT_TYPE(INTERACT_STAR_OR_KEY),
+    SET_INTERACT_TYPE(INTERACT_WARP),
     SET_INT(oInteractionSubtype, INT_SUBTYPE_GRAND_STAR),
     SET_HITBOX(/*Radius*/ 160, /*Height*/ 100),
     SET_HOME(),
@@ -4539,6 +4558,17 @@ const BehaviorScript bhvVanishCap[] = {
 const BehaviorScript bhvStar[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    CALL_NATIVE(bhv_init_room),
+    CALL_NATIVE(bhv_collect_star_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_collect_star_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript Bhv_Custom_0x00407000[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NO_EXIT),
     CALL_NATIVE(bhv_init_room),
     CALL_NATIVE(bhv_collect_star_init),
     BEGIN_LOOP(),

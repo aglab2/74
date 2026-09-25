@@ -5,7 +5,7 @@
 #include "textures.h"
 
 #include "make_const_nonconst.h"
-#include "levels/ddd/areas/1/movtext.inc.c"
-#include "levels/ddd/areas/2/movtext.inc.c"
 
-#include "levels/ddd/leveldata.inc.c"
+#include "levels/ddd/custom_c/textureNew.inc.c"
+#include "levels/ddd/custom_c/movtextNew.inc.c"
+#include "levels/ddd/custom_c/custom.modelopt.inc.c"

@@ -12,7 +12,7 @@
  * The distance from Mario at which coin formations spawn their coins. Vanilla is 2000.0f.
  * Set this to o->oDrawingDistance for a more reasonable range at the cost of performance.
  */
-#define COIN_FORMATION_DISTANCE 2000.0f
+#define COIN_FORMATION_DISTANCE 6000.0f
 
 /**
  * Moving Coins flicker and disappear when they hit lava instead of being instantly deleted.
@@ -27,7 +27,7 @@
 /**
  * Allow previewing blue coin locations from a blue coin switch when Mario is standing on the blue coin switch.
  */
-// #define BLUE_COIN_SWITCH_PREVIEW
+#define BLUE_COIN_SWITCH_PREVIEW
 
 /****************
  * -- GOOMBA --

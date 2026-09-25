@@ -5,6 +5,7 @@
 #include "textures.h"
 
 #include "make_const_nonconst.h"
-#include "levels/castle_courtyard/areas/1/movtext.inc.c"
 
-#include "levels/castle_courtyard/leveldata.inc.c"
+#include "levels/castle_courtyard/custom_c/textureNew.inc.c"
+#include "levels/castle_courtyard/custom_c/movtextNew.inc.c"
+#include "levels/castle_courtyard/custom_c/custom.modelopt.inc.c"

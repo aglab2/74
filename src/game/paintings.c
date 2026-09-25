@@ -18,7 +18,8 @@
 #include "paintings.h"
 #include "save_file.h"
 #include "segment2.h"
-#include "engine/gut.h"
+
+#if 0
 
 /**
  * @file paintings.c
@@ -639,7 +640,7 @@ s16 calculate_ripple_at_point(struct Painting *painting, f32 posX, f32 posY) {
     } else {
         // use a cosine wave to make the ripple go up and down,
         // scaled by the painting's ripple magnitude
-        f32 rippleZ = rippleMag * coss(rippleRate * 0x10000 * (rippleTimer - rippleDistance));
+        f32 rippleZ = rippleMag * cosf(rippleRate * (2 * M_PI) * (rippleTimer - rippleDistance));
 
         // round it to an int and return it
         return round_float(rippleZ);
@@ -907,8 +908,8 @@ Gfx *painting_model_view_transform(struct Painting *painting) {
     Gfx *gfx = dlist;
 
     guTranslate(translate, painting->posX, painting->posY, painting->posZ);
-    guRotateX(rotX, painting->pitch / 360.f * 0x10000);
-    guRotateY(rotY, painting->yaw / 360.f * 0x10000);
+    guRotate(rotX, painting->pitch, 1.0f, 0.0f, 0.0f);
+    guRotate(rotY, painting->yaw, 0.0f, 1.0f, 0.0f);
     guScale(scale, sizeRatio, sizeRatio, sizeRatio);
 
     gSPMatrix(gfx++, translate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
@@ -1274,3 +1275,20 @@ Gfx *geo_painting_update(s32 callContext, UNUSED struct GraphNode *node, UNUSED 
     }
     return NULL;
 }
+
+#else
+
+Gfx *geo_painting_draw(s32 callContext, struct GraphNode *node, UNUSED void *context)
+{
+    return NULL;
+}
+
+Gfx *geo_painting_update(s32 callContext, UNUSED struct GraphNode *node, UNUSED Mat4 mtx)
+{
+    return NULL;
+}
+
+s8 gDddPaintingStatus;
+struct Painting *gRipplingPainting = NULL;
+
+#endif

@@ -191,7 +191,10 @@ extern float sinf(float angle);
 extern float cosf(float angle);
 extern signed short sins (unsigned short angle);
 extern signed short coss (unsigned short angle);
-#define sqrtf __builtin_sqrtf
+extern float sqrtf(float value);
+#ifdef __sgi
+#pragma intrinsic(sqrtf);
+#endif
 
 /*
  *  Dump routines for low-level display lists

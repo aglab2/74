@@ -5,6 +5,7 @@
 #include "textures.h"
 
 #include "make_const_nonconst.h"
-#include "levels/bob/areas/1/trajectory.inc.c"
 
-#include "levels/bob/leveldata.inc.c"
+#include "levels/bob/custom_c/textureNew.inc.c"
+#include "levels/bob/custom_c/movtextNew.inc.c"
+#include "levels/bob/custom_c/custom.modelopt.inc.c"

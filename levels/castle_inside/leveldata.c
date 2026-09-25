@@ -5,9 +5,7 @@
 #include "textures.h"
 
 #include "make_const_nonconst.h"
-#include "levels/castle_inside/texture.inc.c"
-#include "levels/castle_inside/painting.inc.c"
-#include "levels/castle_inside/areas/3/trajectory.inc.c"
-#include "levels/castle_inside/areas/3/movtext.inc.c"
 
-#include "levels/castle_inside/leveldata.inc.c"
+#include "levels/castle_inside/custom_c/textureNew.inc.c"
+#include "levels/castle_inside/custom_c/movtextNew.inc.c"
+#include "levels/castle_inside/custom_c/custom.model.inc.c"

@@ -5,4 +5,7 @@
 #include "textures.h"
 
 #include "make_const_nonconst.h"
-#include "levels/vcutm/leveldata.inc.c"
+
+#include "levels/vcutm/custom_c/textureNew.inc.c"
+#include "levels/vcutm/custom_c/movtextNew.inc.c"
+#include "levels/vcutm/custom_c/custom.modelopt.inc.c"

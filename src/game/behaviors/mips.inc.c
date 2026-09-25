@@ -44,6 +44,8 @@ void bhv_mips_init(void) {
  * and furthest from Mario's current location.
  */
 s32 bhv_mips_find_furthest_waypoint_to_mario(void) {
+    return 0;
+
     s8 i;
     Vec3s pos;
     s16 furthestWaypointIndex = -1;
@@ -99,6 +101,10 @@ void bhv_mips_act_wait_for_nearby_mario(void) {
  * Continue to follow our path around the basement area.
  */
 void bhv_mips_act_follow_path(void) {
+    cur_obj_init_animation(0);
+    o->oAction = MIPS_ACT_WAIT_FOR_NEARBY_MARIO;
+    return;
+
     // Retrieve current waypoint.
     struct Waypoint **pathBase = segmented_to_virtual(&inside_castle_seg7_trajectory_mips);
     struct Waypoint *waypoint = segmented_to_virtual(*(pathBase + o->oMipsStartWaypointIndex));

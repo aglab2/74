@@ -72,6 +72,7 @@ const LevelScript level_bowser_3_entry[] = {
         WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_BOWSER_3, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         JUMP_LINK(script_bowser_3_objects_1),
         WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_BITS, /*destArea*/ 0x01, /*destNode*/ 0x0C, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0, /*destLevel*/ LEVEL_ENDING, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         TERRAIN(/*terrainData*/ bowser_3_seg7_collision_level),
         JUMP_LINK(script_bowser_3_macro_objects),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0002, /*seq*/ SEQ_LEVEL_BOSS_KOOPA_FINAL),

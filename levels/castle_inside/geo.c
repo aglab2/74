@@ -13,4 +13,5 @@
 
 #include "levels/castle_inside/header.h"
 
-#include "levels/castle_inside/geo.inc.c"
+#include "levels/castle_inside/custom_c/custom.geo.inc.c"
+

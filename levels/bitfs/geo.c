@@ -13,4 +13,5 @@
 
 #include "levels/bitfs/header.h"
 
-#include "levels/bitfs/geo.inc.c"
+#include "levels/bitfs/custom_c/custom.geo.inc.c"
+

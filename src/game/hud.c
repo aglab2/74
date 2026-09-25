@@ -429,7 +429,7 @@ void render_debug_mode(void) {
 void render_hud_coins(void) {
     char str[10];
     sprintf(str, "✪×%d", gHudDisplay.coins);
-    print_text(HUD_COINS_X, HUD_TOP_Y, str);
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(24), 188, str);
 }
 
 /**
@@ -444,7 +444,7 @@ void render_hud_stars(void) {
     } else {
         sprintf(str, "★%d", gHudDisplay.stars);
     }
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X), HUD_TOP_Y, str);
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(24), 210, str);
 }
 
 /**
@@ -482,7 +482,7 @@ void render_hud_timer(void) {
     else
         sprintf(str, "%0d'%02d\"%02d", timerMins, timerSecs, timerFracMSecs);
 
-    print_text_aligned(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(28), 185, str, TEXT_ALIGN_RIGHT);
+    print_text_aligned(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(150), 185, str, TEXT_ALIGN_RIGHT);
 }
 
 /**

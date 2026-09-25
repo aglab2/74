@@ -830,7 +830,10 @@ def write_sequences(
             )
 
     ind_to_name = []
-    for key in json:
+    for key, seq in json.items():
+        if seq is None:
+            continue
+
         ind = int(key.split("_")[0], 16)
         while len(ind_to_name) <= ind:
             ind_to_name.append(None)

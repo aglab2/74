@@ -13,5 +13,5 @@
 
 #include "levels/sl/header.h"
 
-#include "levels/sl/areas/1/geo.inc.c"
-#include "levels/sl/areas/2/geo.inc.c"
+#include "levels/sl/custom_c/custom.geo.inc.c"
+

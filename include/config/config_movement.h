@@ -31,7 +31,7 @@
 /**
  * Change the movement speed when hanging from a ceiling (the vanilla value is 4.0f, has no effect if BETTER_HANGING is enabled).
  */
-#define HANGING_SPEED 4.0f
+#define HANGING_SPEED 10.0f
 
 /**
  * Prevents Mario from falling asleep while idle.
@@ -106,7 +106,7 @@
 /**
  * The maximum angle the player can wall kick, in degrees. 0..90. To allow 45 degree wall kicks, you must supply `46` to allow 45 and under.
  */
-#define WALL_KICK_DEGREES 45
+#define WALL_KICK_DEGREES 46
 
 /**
  * Makes Mario unable to ledge grab steep slopes to prevent false ledge grabs.
@@ -116,7 +116,7 @@
 /**
  * Buffers an A input if you jump off a slope during the landing lag
  */
-// #define SLOPE_BUFFER
+#define SLOPE_BUFFER
 
 /**
  * Disables BLJs and crushes SimpleFlips's dreams.

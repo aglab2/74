@@ -22,7 +22,6 @@
 #include "config.h"
 #include "config/config_world.h"
 #include "actors/common1.h"
-#include "engine/gut.h"
 
 static void geo_process_node_and_siblings(struct GraphNode *firstNode);
 
@@ -349,6 +348,7 @@ static void geo_process_master_list_sub(struct GraphNodeMasterList *node) {
             startLayer = LAYER_FORCE;
             endLayer = LAYER_TRANSPARENT;
         }
+
         // Iterate through the layers on the current render phase.
         for (currLayer = startLayer; currLayer <= endLayer; currLayer++) {
             // Set 'currList' to the first DisplayListNode on the current layer.
@@ -369,7 +369,21 @@ static void geo_process_master_list_sub(struct GraphNodeMasterList *node) {
             if (currList)
             {
                 set_render_mode(&tempGfxHead, enableZBuffer, currLayer);
+#ifdef SILHOUETTE
+                if (phaseIndex == RENDER_PHASE_SILHOUETTE)
+                {
+                    gSPDisplayList(tempGfxHead++, dl_silhouette_begin);
+                }
+#endif
+
                 render_lists(&tempGfxHead, masterLayer->list.head);
+
+#ifdef SILHOUETTE
+                if (phaseIndex == RENDER_PHASE_SILHOUETTE)
+                {
+                    gSPDisplayList(tempGfxHead++, dl_silhouette_end);
+                }
+#endif
             }
         }
     }
@@ -411,7 +425,7 @@ static void append_dl(struct DisplayListLinks* list, void* dl)
  */
 void geo_append_display_list(void *displayList, s32 layer) {
 #ifdef F3DEX_GBI_2
-    // gSPLookAt(gDisplayListHead++, gCurLookAt);
+    gSPLookAt(gDisplayListHead++, gCurLookAt);
 #endif
 #if SILHOUETTE
     if (gCurGraphNodeObject != NULL) {
@@ -534,7 +548,7 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
 
         // With low fovs, coordinate overflow can occur more easily. This slightly reduces precision only while zoomed in.
         f32 scale = node->fov < 28.0f ? remap(MAX(node->fov, 15), 15, 28, 0.5f, 1.0f): 1.0f;
-        perspNorm = guPerspectiveA(mtx, node->fov / 360.f * 0x10000, sAspectRatio, node->near / WORLD_SCALE, node->far / WORLD_SCALE, scale);
+        guPerspective(mtx, &perspNorm, node->fov, sAspectRatio, node->near / WORLD_SCALE, node->far / WORLD_SCALE, scale);
 
         gSPPerspNormalize(gDisplayListHead++, perspNorm);
 
