@@ -316,7 +316,8 @@ void load_area(s32 index) {
     int mode = 0;
     if (gCurrCourseNum == COURSE_TTC
      || gCurrCourseNum == COURSE_RR
-     || gCurrCourseNum == COURSE_BITS)
+     || gCurrCourseNum == COURSE_BITS
+     || gCurrCourseNum == COURSE_SL)
         mode = 7;
 
     set_vi_mode(mode);
