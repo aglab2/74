@@ -226,7 +226,7 @@ static void stationary_slow_down(struct MarioState *m) {
 
 static void update_swimming_speed(struct MarioState *m, f32 decelThreshold) {
     f32 buoyancy = get_buoyancy(m);
-    f32 maxSpeed = 28.0f;
+    f32 maxSpeed = 43.0f;
 
     if (m->action & ACT_FLAG_STATIONARY) {
         m->forwardVel -= 2.0f;
@@ -527,11 +527,11 @@ static s32 act_breaststroke(struct MarioState *m) {
     }
 
     if (m->actionTimer < 6) {
-        m->forwardVel += 0.5f;
+        m->forwardVel += 1.75f;
     }
 
     if (m->actionTimer >= 9) {
-        m->forwardVel += 1.5f;
+        m->forwardVel += 1.84375f;
     }
 
     if (m->actionTimer >= 2) {

@@ -300,7 +300,7 @@ s32 update_hang_moving(struct MarioState *m) {
     f32 maxSpeed = HANGING_SPEED;
 #endif
 
-    m->forwardVel += 1.0f;
+    m->forwardVel += 4.0f;
     if (m->forwardVel > maxSpeed) {
         m->forwardVel = maxSpeed;
     }
@@ -378,7 +378,7 @@ s32 act_start_hanging(struct MarioState *m) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
 #else
-    if ((m->input & INPUT_NONZERO_ANALOG) && m->actionTimer >= 31) {
+    if ((m->input & INPUT_NONZERO_ANALOG) && m->actionTimer >= 7) {
         return set_mario_action(m, ACT_HANGING, 0);
     }
 
