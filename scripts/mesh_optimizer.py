@@ -93,11 +93,11 @@ def vtx_filter_ow1(vtx):
 # VTX_FILTER = vtx_filter_ow1
 #VTX_SUFFIX = 'opt_m'
 
-HAS_EX3_COMMANDS = False
+HAS_EX3_COMMANDS = True
 HAS_TRI3 = False
-#VTX_BUF_SIZE = 56
+VTX_BUF_SIZE = 56
 #VTX_BUF_SIZE = 59
-VTX_BUF_SIZE = 32
+#VTX_BUF_SIZE = 32
 
 # Current DFS implementation is O(2^n) algo so not to wait forever we limit the amount of triangles to walk through
 WALK_LIMIT = 10000
