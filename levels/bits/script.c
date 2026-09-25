@@ -48,6 +48,17 @@ JUMP_LINK(script_func_vo_bob),
 JUMP_LINK(script_func_global_1),
 JUMP_LINK(script_func_global_2),
 JUMP_LINK(script_func_global_15),
+LOAD_MODEL_FROM_GEO(22, warp_pipe_geo),
+LOAD_MODEL_FROM_GEO(23, bubbly_tree_geo),
+LOAD_MODEL_FROM_GEO(24, spiky_tree_geo),
+LOAD_MODEL_FROM_GEO(25, snow_tree_geo),
+LOAD_MODEL_FROM_GEO(31, metal_door_geo),
+LOAD_MODEL_FROM_GEO(32, hazy_maze_door_geo),
+LOAD_MODEL_FROM_GEO(34, castle_door_0_star_geo),
+LOAD_MODEL_FROM_GEO(35, castle_door_1_star_geo),
+LOAD_MODEL_FROM_GEO(36, castle_door_3_stars_geo),
+LOAD_MODEL_FROM_GEO(37, key_door_geo),
+LOAD_MODEL_FROM_GEO(38, castle_door_geo),
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
