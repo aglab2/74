@@ -19,10 +19,10 @@
 
 static const LevelScript script_bowser_1_macro_objects[] = {
     // Special objects
-    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/  2949,   589,     0, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
-    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/     0,   589, -2949, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
-    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/     0,   589,  2949, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
-    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/ -2949,   589,     0, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
+    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/ 3834,  1579,  0, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
+    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/ 0, 1579, -3834, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
+    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/ 0, 1579, 3730, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
+    OBJECT(/*model*/ MODEL_WATER_MINE,        /*pos*/ -3939,  1579,     0, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
     OBJECT(/*model*/ MODEL_BOWSER,            /*pos*/     0,   300, -1000, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowser),
     OBJECT(/*model*/ MODEL_LEVEL_GEOMETRY_03, /*pos*/     0,   384,  3072, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
     OBJECT(/*model*/ MODEL_LEVEL_GEOMETRY_03, /*pos*/ -2171,   384, -2171, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),

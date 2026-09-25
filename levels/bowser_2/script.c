@@ -23,11 +23,12 @@ static const LevelScript script_bowser_2_macro_objects[] = {
 };
 
 static const LevelScript script_bowser_2_objects_1[] = {
-    OBJECT(/*model*/ MODEL_BOWSER_2_TILTING_ARENA, /*pos*/     0,    0,     0, /*angle*/ 0, 90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvTiltingBowserLavaPlatform),
-    OBJECT(/*model*/ MODEL_BOWSER_BOMB,            /*pos*/     4, 1329,  3598, /*angle*/ 0, 90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
-    OBJECT(/*model*/ MODEL_BOWSER_BOMB,            /*pos*/  3584, 1329,     0, /*angle*/ 0, 90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
-    OBJECT(/*model*/ MODEL_BOWSER_BOMB,            /*pos*/     0, 1329, -3583, /*angle*/ 0, 90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
-    OBJECT(/*model*/ MODEL_BOWSER_BOMB,            /*pos*/ -3583, 1329,     0, /*angle*/ 0, 90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserBomb),
+OBJECT_WITH_ACTS(0,63,1330,2292,0,180,0,0x0, bhvFlamethrower,31),
+OBJECT_WITH_ACTS(179,0,1589,-3583,0,90,0,0x0, bhvBowserBomb,31),
+OBJECT_WITH_ACTS(0,42,1330,-2344,0,0,0,0x0, bhvFlamethrower,31),
+OBJECT_WITH_ACTS(179,56,1589,3598,0,90,0,0x0, bhvBowserBomb,31),
+OBJECT_WITH_ACTS(54,0,0,0,0,90,0,0x0, bhvTiltingBowserLavaPlatform,31),
+OBJECT_WITH_ACTS(0,0,2229,0,0,180,0,0xa0000, bhvSpinAirborneCircleWarp,31),
     RETURN(),
 };
 
@@ -46,9 +47,9 @@ const LevelScript level_bowser_2_entry[] = {
 
     AREA(/*index*/ 1, bowser_2_geo_000188),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ 0, 2229, 0, /*angle*/ 0, 180, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvSpinAirborneCircleWarp),
-        WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_BOWSER_2, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
-        WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x03, /*destNode*/ 0x36, /*flags*/ WARP_NO_CHECKPOINT),
-        WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_BITFS, /*destArea*/ 0x01, /*destNode*/ 0x0C, /*flags*/ WARP_NO_CHECKPOINT),
+WARP_NODE(241,19,1,6,0),
+WARP_NODE(240,31,1,72,0),
+WARP_NODE(10,33,1,10,0),
         JUMP_LINK(script_bowser_2_objects_1),
         TERRAIN(/*terrainData*/ bowser_2_seg7_collision_lava),
         JUMP_LINK(script_bowser_2_macro_objects),
