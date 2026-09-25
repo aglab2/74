@@ -2939,6 +2939,23 @@ const Gfx dl_draw_quad_verts_0123[] = {
     gsSPEndDisplayList(),
 };
 
+#define SQUARE(a, b, c, d) gsSP2Triangles( a,  b,  c, 0x0, c,  b,  d, 0x0)
+#define LINE(n) \
+    SQUARE(n+0, n+1, n+5, n+6), \
+    SQUARE(n+1, n+2, n+6, n+7), \
+    SQUARE(n+2, n+3, n+7, n+8), \
+    SQUARE(n+3, n+4, n+8, n+9)
+
+const Gfx dl_draw_quad_verts_gigantic[] = {
+    LINE(0),
+    LINE(5),
+    LINE(10),
+    LINE(15),
+    gsSPEndDisplayList(),
+};
+#undef LINE
+#undef SQUARE
+
 // 0x02014508 - 0x02014520
 const Gfx dl_draw_quad_verts_4567[] = {
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),

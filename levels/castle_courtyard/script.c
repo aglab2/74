@@ -92,8 +92,8 @@ const LevelScript level_castle_courtyard_entry[] = {
 		OBJECT_WITH_ACTS(208,870,-729,-1400,0,180,0,0xa000000, bhvStarDoor,31),
 		OBJECT_WITH_ACTS(208,2079,-729,-4793,0,0,0,0x1e000000, bhvStarDoor,31),
 		OBJECT_WITH_ACTS(208,2237,-729,-4793,0,180,0,0x1e000000, bhvStarDoor,31),
-		OBJECT_WITH_ACTS(37,-3390,-880,5785,0,180,0,0x2000000, bhvDoorWarp,31),
-		OBJECT_WITH_ACTS(37,-3542,-880,5785,0,0,0,0x2000000, bhvDoorWarp,31),
+		OBJECT_WITH_ACTS(37,-3390,-880,5785,0,180,0,0xA30000, bhvDoorWarp,31),
+		OBJECT_WITH_ACTS(37,-3542,-880,5785,0,0,0,0xA40000, bhvDoorWarp,31),
 		OBJECT_WITH_ACTS(0,-3252,-579,-5649,0,0,0,0x1e0e0000, bhvWarp,31),
 		OBJECT_WITH_ACTS(0,-1083,-117,-5998,0,0,0,0x280d0000, bhvWarp,31),
 		OBJECT_WITH_ACTS(0,4790,-1195,-6016,0,0,0,0x370a0000, bhvWarp,31),
@@ -247,6 +247,8 @@ const LevelScript level_castle_courtyard_entry[] = {
 		WARP_NODE(4,8,1,10,0),
 		WARP_NODE(5,24,1,10,0),
 		WARP_NODE(6,17,1,10,0),
+		WARP_NODE(0xA4,31,1,0xA4,0),
+		WARP_NODE(0xA3,31,1,0xA3,0),
 
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),

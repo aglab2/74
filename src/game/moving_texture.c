@@ -301,8 +301,7 @@ Gfx *geo_movtex_pause_control(s32 callContext, UNUSED struct GraphNode *node, UN
  * rotOffset: gets added to base rotation
  * scale: how often the texture repeats, 1 = no repeat
  */
-void movtex_make_quad_vertex(Vtx *verts, s32 index, s16 x, s16 y, s16 z, s16 rot, s16 rotOffset,
-                             f32 scale, u8 alpha) {
+static void movtex_make_quad_vertex(Vtx *verts, s32 index, s16 x, s16 y, s16 z, s16 rot, s16 rotOffset, f32 scale, u8 alpha) {
     scale = 32.0f * ((32.0f * scale) - 1.0f);
     s16 s = scale * sins(rot + rotOffset);
     s16 t = scale * coss(rot + rotOffset);
@@ -315,6 +314,25 @@ void movtex_make_quad_vertex(Vtx *verts, s32 index, s16 x, s16 y, s16 z, s16 rot
         make_vertex(verts, index, x, y, z, s, t, 255, 255, 255, alpha);
     }
 }
+
+static void movtex_make_quad_vertex_ex(Vtx *verts, s32 index, s16 x, s16 y, s16 z, s16 rot, f32 xx, f32 zz, f32 scale, u8 alpha) {
+    scale = 32.0f * ((32.0f * scale) - 1.0f);
+
+    s16 rotOffset = atan2s(xx, zz);
+    scale *= sqrtf(xx*xx + zz*zz);
+
+    s16 s = scale * sins(rot + rotOffset);
+    s16 t = scale * coss(rot + rotOffset);
+
+    if (gMovtexVtxColor == MOVTEX_VTX_COLOR_YELLOW) {
+        make_vertex(verts, index, x, y, z, s, t, 255, 255, 0, alpha);
+    } else if (gMovtexVtxColor == MOVTEX_VTX_COLOR_RED) {
+        make_vertex(verts, index, x, y, z, s, t, 255, 0, 0, alpha);
+    } else {
+        make_vertex(verts, index, x, y, z, s, t, 255, 255, 255, alpha);
+    }
+}
+
 
 /**
  * Represents a single flat quad with a rotating texture
@@ -348,7 +366,9 @@ s16 gMovetexLastTextureId;
 /**
  * Generates and returns a display list for a single MovtexQuad at height y.
  */
-Gfx *movtex_gen_from_quad(s16 y, struct MovtexQuad *quad) {
+extern void print_text_fmt_int(int, int, const char*, int);
+extern const Gfx dl_draw_quad_verts_gigantic[];
+static Gfx *movtex_gen_from_quad(s16 y, struct MovtexQuad *quad) {
     s16 rot;
     s16 rotspeed = quad->rotspeed;
     s16 scale = quad->scale;
@@ -363,9 +383,17 @@ Gfx *movtex_gen_from_quad(s16 y, struct MovtexQuad *quad) {
     s16 rotDir = quad->rotDir;
     s16 alpha = quad->alpha;
     s16 textureId = quad->textureId;
-    Vtx *verts = alloc_display_list(4 * sizeof(*verts));
+    Vtx *verts;
     Gfx *gfxHead;
     Gfx *gfx;
+
+    int is_gigantic = absi(x3 - x1) > 10000 || absi(z3 - z1) > 10000;
+
+    if (is_gigantic) {
+        verts = alloc_display_list(25 * sizeof(*verts));
+    } else {
+        verts = alloc_display_list(4 * sizeof(*verts));
+    }
 
     if (textureId == gMovetexLastTextureId) {
         gfxHead = alloc_display_list(3 * sizeof(*gfxHead));
@@ -381,16 +409,36 @@ Gfx *movtex_gen_from_quad(s16 y, struct MovtexQuad *quad) {
         quad->rot += rotspeed;
     }
     rot = quad->rot;
-    if (rotDir == ROTATE_CLOCKWISE) {
-        movtex_make_quad_vertex(verts, 0, x1, y, z1, rot,  0x0000, scale, alpha);
-        movtex_make_quad_vertex(verts, 1, x2, y, z2, rot,  0x4000, scale, alpha);
-        movtex_make_quad_vertex(verts, 2, x3, y, z3, rot, -0x8000, scale, alpha);
-        movtex_make_quad_vertex(verts, 3, x4, y, z4, rot, -0x4000, scale, alpha);
-    } else { // ROTATE_COUNTER_CLOCKWISE
-        movtex_make_quad_vertex(verts, 0, x1, y, z1, rot,  0x0000, scale, alpha);
-        movtex_make_quad_vertex(verts, 1, x2, y, z2, rot, -0x4000, scale, alpha);
-        movtex_make_quad_vertex(verts, 2, x3, y, z3, rot, -0x8000, scale, alpha);
-        movtex_make_quad_vertex(verts, 3, x4, y, z4, rot,  0x4000, scale, alpha);
+
+    int additive = 0x4000;
+
+    if (is_gigantic)
+    {
+        int dx = (x3 - x1) / 4;
+        int dz = (z3 - z1) / 4;
+
+        int idx = 0;
+        for (int i = 0; i <= 4; i++)
+        for (int j = 0; j <= 4; j++)
+        {
+            s16 x = x1 + dx * i;
+            s16 z = z1 + dz * j;
+            movtex_make_quad_vertex_ex(verts, idx++, x, y, z, rot, (i - 2) * 0.5f, (j - 2) * 0.5f, scale, alpha);
+        }
+    }
+    else
+    {
+        if (rotDir == ROTATE_CLOCKWISE) {
+            movtex_make_quad_vertex(verts, 0, x1, y, z1, rot,  0x0000, scale, alpha);
+            movtex_make_quad_vertex(verts, 1, x2, y, z2, rot,  0x4000, scale, alpha);
+            movtex_make_quad_vertex(verts, 2, x3, y, z3, rot, -0x8000, scale, alpha);
+            movtex_make_quad_vertex(verts, 3, x4, y, z4, rot, -0x4000, scale, alpha);
+        } else { // ROTATE_COUNTER_CLOCKWISE
+            movtex_make_quad_vertex(verts, 0, x1, y, z1, rot,  0x0000, scale, alpha);
+            movtex_make_quad_vertex(verts, 1, x2, y, z2, rot, -0x4000, scale, alpha);
+            movtex_make_quad_vertex(verts, 2, x3, y, z3, rot, -0x8000, scale, alpha);
+            movtex_make_quad_vertex(verts, 3, x4, y, z4, rot,  0x4000, scale, alpha);
+        }
     }
 
     // Only add commands to change the texture when necessary
@@ -405,8 +453,8 @@ Gfx *movtex_gen_from_quad(s16 y, struct MovtexQuad *quad) {
         }
         gMovetexLastTextureId = textureId;
     }
-    gSPVertex(gfx++, VIRTUAL_TO_PHYSICAL2(verts), 4, 0);
-    gSPDisplayList(gfx++, dl_draw_quad_verts_0123);
+    gSPVertex(gfx++, VIRTUAL_TO_PHYSICAL2(verts), is_gigantic ? 25 : 4, 0);
+    gSPDisplayList(gfx++, is_gigantic ? dl_draw_quad_verts_gigantic : dl_draw_quad_verts_0123);
     gSPEndDisplayList(gfx);
     return gfxHead;
 }
@@ -417,7 +465,7 @@ Gfx *movtex_gen_from_quad(s16 y, struct MovtexQuad *quad) {
  * quadArrSegmented: a segmented address to an array of s16. The first number
  * is the number of entries, followed by that number of MovtexQuad structs.
  */
-Gfx *movtex_gen_from_quad_array(s16 y, void *quadArrSegmented) {
+static Gfx *movtex_gen_from_quad_array(s16 y, void *quadArrSegmented) {
     s16 *quadArr = segmented_to_virtual(quadArrSegmented);
     s16 numLists = quadArr[0];
     Gfx *gfxHead = alloc_display_list((numLists + 1) * sizeof(*gfxHead));
@@ -448,7 +496,7 @@ Gfx *movtex_gen_from_quad_array(s16 y, void *quadArrSegmented) {
  * movetexQuadsSegmented: segmented address to the MovtexQuadCollection array
  * that will be searched.
  */
-Gfx *movtex_gen_quads_id(s16 id, s16 y, void *movetexQuadsSegmented) {
+static Gfx *movtex_gen_quads_id(s16 id, s16 y, void *movetexQuadsSegmented) {
     struct MovtexQuadCollection *collection = segmented_to_virtual(movetexQuadsSegmented);
     s32 i = 0;
 
