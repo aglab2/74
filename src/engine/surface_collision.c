@@ -9,7 +9,6 @@
 #include "surface_collision.h"
 #include "surface_load.h"
 #include "game/puppyprint.h"
-#include "pairing_heap.h"
 
 /**************************************************
  *                      WALLS                     *
@@ -47,14 +46,6 @@ s32 check_wall_edge(Vec3f vert, Vec3f v2, f32 *d00, f32 *d01, f32 *invDenom, f32
     return TRUE;
 }
 
-struct CollectedNode
-{
-    struct PairingHeapNode node;
-    f32 dx, dz;
-    int cornerThresholded;
-    struct Surface* surf;
-};
-
 struct Find1Result
 {
     struct Surface* surf;
@@ -62,7 +53,7 @@ struct Find1Result
     int cornerThresholded;
 };
 
-static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos)
+static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos, struct WallCollisionData *data)
 {
     const f32 corner_threshold = -0.9f;
     struct Surface *surf;
@@ -73,16 +64,21 @@ static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(s
     TerrainData type = SURFACE_DEFAULT;
 
     const f32 margin_radius = radius - 1.0f;
-
-    struct CollectedNode nodes[64];
-    unsigned nextNode = 0;
-
-    struct PairingHeapHead root;
-    pairingheap_init(&root);
+    struct Find1Result result;
+    result.surf = 0;
+    f32 best = 1000.f;
 
     // Stay in this loop until out of walls.
     while (surfaceNode != NULL) {
         surf        = surfaceNode->surface;
+
+        // TODO: Optimize...
+        for (int i = 0; i < data->numWalls; i++)
+        {
+            if (surf == data->walls[i])
+                continue;
+        }
+
         surfaceNode = surfaceNode->next;
         type        = surf->type;
 
@@ -145,61 +141,35 @@ static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(s
                 }
             }
 
+            f32 priority = invDenom;
+
             // Check collision
             if (FLT_IS_NONZERO(invDenom)) {
                 invDenom = (offset / invDenom);
             }
 
-            struct CollectedNode* node = &nodes[nextNode++];
-            if (nextNode > sizeof(nodes) / sizeof(*nodes))
-                break;
-
             // Update pos
-            node->dx = (d00 *= invDenom);
-            node->dz = (d01 *= invDenom);
-            node->node.priority = node->dx*node->dx + node->dz*node->dz;
-            node->node.priority -= 100000;
-            node->cornerThresholded = 0;
-            node->surf = surf;
-
-            if ((d00 * surf->normal.x) + (d01 * surf->normal.z) < (corner_threshold * offset)) {
-                node->cornerThresholded = 1;
-                node->node.priority -= 100000;
+            if (priority < best)
+            {
+                result.dx = (d00 *= invDenom);
+                result.dz = (d01 *= invDenom);
+                best = priority;
+                result.surf = surf;
+                if ((d00 * surf->normal.x) + (d01 * surf->normal.z) < (corner_threshold * offset)) {
+                    result.cornerThresholded = 1;
+                }
             }
-
-            pairingheap_add(&root, &node->node);
         } else {
-            struct CollectedNode* node = &nodes[nextNode++];
-            if (nextNode > sizeof(nodes) / sizeof(*nodes))
-                break;
-
-            // Update pos
-            f32 dx = surf->normal.x * (radius - offset);
-            f32 dz = surf->normal.z * (radius - offset);
-
-            node->dx = dx;
-            node->dz = dz;
-
-            node->node.priority = -offset;
-            node->cornerThresholded = 0;
-            node->surf = surf;
-
-            pairingheap_add(&root, &node->node);
+            f32 priority = offset <= 0.f ? offset + 100.f : offset;
+            if (priority < best)
+            {
+                result.dx = surf->normal.x * (radius - offset);
+                result.dz = surf->normal.z * (radius - offset);
+                best = priority;
+                result.surf = surf;
+                result.cornerThresholded = 0;
+            }
         }
-    }
-
-    struct Find1Result result;
-    if (pairingheap_is_empty(&root))
-    {
-        result.surf = NULL;
-    }
-    else
-    {
-        struct CollectedNode* best = (struct CollectedNode*) pairingheap_first(&root);
-        result.surf = best->surf;
-        result.dx = best->dx;
-        result.dz = best->dz;
-        result.cornerThresholded = best->cornerThresholded;
     }
 
     return result;
@@ -215,7 +185,7 @@ static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode, struc
     int numCols = 0;
     for (int i = 0; i < MAX_REFERENCED_WALLS; i++)
     {
-        struct Find1Result result = find_wall_collisions_from_list1(surfaceNode, data->radius, pos);
+        struct Find1Result result = find_wall_collisions_from_list1(surfaceNode, data->radius, pos, data);
         if (!result.surf)
             break;
 
