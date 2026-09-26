@@ -55,6 +55,7 @@ struct Find1Result
 
 static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos, struct WallCollisionData *data)
 {
+    int use_edge_collision = gCurrCourseNum != COURSE_JRB;
     const f32 corner_threshold = -0.9f;
     struct Surface *surf;
     f32 offset;
@@ -124,6 +125,10 @@ static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(s
         f32 mult = (d00 * d11) - (d01 * d01);
         if (check_wall_vw(d00, d01, d11, d20, d21, mult)) {
             if (offset < 0) {
+                continue;
+            }
+
+            if (!use_edge_collision) {
                 continue;
             }
 

@@ -108,6 +108,9 @@ void bhv_goomba_triplet_spawner_update(void) {
  * Initialization function for goomba.
  */
 void bhv_goomba_init(void) {
+    if (gCurrCourseNum == COURSE_SL)
+        o->activeFlags |= ACTIVE_FLAG_IGNORE_ENV_BOXES;
+
     o->oGoombaSize = o->oBehParams2ndByte & GOOMBA_BP_SIZE_MASK;
 
     o->oGoombaScale = sGoombaProperties[o->oGoombaSize].scale;
