@@ -3011,7 +3011,10 @@ void update_camera(struct Camera *c) {
                     break;
 
                 case CAMERA_MODE_BOSS_FIGHT:
-                    mode_boss_fight_camera(c);
+                    if (ForceParaCam)
+                        mode_8_directions_camera(c);
+                    else
+                        mode_boss_fight_camera(c);
                     break;
 
                 case CAMERA_MODE_PARALLEL_TRACKING:
