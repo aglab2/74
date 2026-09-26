@@ -29,6 +29,8 @@
 #include "puppyprint.h"
 #include "profiling.h"
 
+static u8 ForceParaCam = 0;
+
 #define CBUTTON_MASK (U_CBUTTONS | D_CBUTTONS | L_CBUTTONS | R_CBUTTONS)
 
 /**
@@ -2197,6 +2199,7 @@ s16 update_default_camera(struct Camera *c) {
 #endif
     }
 
+#if 0
     // Make Lakitu fly above the gas
     gasHeight = find_poison_gas_level(cPos[0], cPos[2]);
     if (gasHeight != FLOOR_LOWER_LIMIT) {
@@ -2204,6 +2207,7 @@ s16 update_default_camera(struct Camera *c) {
             c->pos[1] = gasHeight;
         }
     }
+#endif
 
     if (sMarioCamState->action & ACT_FLAG_HANGING || sMarioCamState->action == ACT_RIDING_HOOT) {
         camFloorHeight = sMarioCamState->pos[1] + 400.f;
@@ -2739,7 +2743,8 @@ void set_camera_mode(struct Camera *c, s16 mode, s16 frames) {
 #ifndef ENABLE_VANILLA_CAM_PROCESSING
         if (mode == CAMERA_MODE_8_DIRECTIONS) {
             // Helps transition from any camera mode to 8dir
-            s8DirModeYawOffset = snap_to_45_degrees(c->yaw);
+            if (!ForceParaCam)
+                s8DirModeYawOffset = snap_to_45_degrees(c->yaw);
         }
 #endif
 
@@ -2956,6 +2961,9 @@ void update_camera(struct Camera *c) {
                     mode_mario_camera(c);
             }
         } else {
+            if (gPlayer1Controller->buttonPressed & L_TRIG)
+                ForceParaCam = !ForceParaCam;
+
             switch (c->mode) {
                 case CAMERA_MODE_BEHIND_MARIO:
                     mode_behind_mario_camera(c);
@@ -2966,7 +2974,11 @@ void update_camera(struct Camera *c) {
                     break;
 
                 case CAMERA_MODE_WATER_SURFACE:
-                    mode_water_surface_camera(c);
+                    if (ForceParaCam)
+                        mode_8_directions_camera(c);
+                    else
+                        mode_water_surface_camera(c);
+
                     break;
 
                 case CAMERA_MODE_INSIDE_CANNON:
