@@ -9,6 +9,7 @@
 #include "surface_collision.h"
 #include "surface_load.h"
 #include "game/puppyprint.h"
+#include "pairing_heap.h"
 
 /**************************************************
  *                      WALLS                     *
@@ -46,23 +47,38 @@ s32 check_wall_edge(Vec3f vert, Vec3f v2, f32 *d00, f32 *d01, f32 *invDenom, f32
     return TRUE;
 }
 
-/**
- * Iterate through the list of walls until all walls are checked and
- * have given their wall push.
- */
-static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode, struct WallCollisionData *data) {
+struct CollectedNode
+{
+    struct PairingHeapNode node;
+    f32 dx, dz;
+    int cornerThresholded;
+    struct Surface* surf;
+};
+
+struct Find1Result
+{
+    struct Surface* surf;
+    f32 dx, dz;
+    int cornerThresholded;
+};
+
+static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos)
+{
     const f32 corner_threshold = -0.9f;
     struct Surface *surf;
     f32 offset;
-    f32 radius = data->radius;
 
-    Vec3f pos = { data->x, data->y + data->offsetY, data->z };
     Vec3f v0, v1, v2;
     f32 d00, d01, d11, d20, d21;
     TerrainData type = SURFACE_DEFAULT;
-    s32 numCols = 0;
 
-    f32 margin_radius = radius - 1.0f;
+    const f32 margin_radius = radius - 1.0f;
+
+    struct CollectedNode nodes[64];
+    unsigned nextNode = 0;
+
+    struct PairingHeapHead root;
+    pairingheap_init(&root);
 
     // Stay in this loop until out of walls.
     while (surfaceNode != NULL) {
@@ -134,29 +150,86 @@ static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode, struc
                 invDenom = (offset / invDenom);
             }
 
+            struct CollectedNode* node = &nodes[nextNode++];
+            if (nextNode > sizeof(nodes) / sizeof(*nodes))
+                break;
+
             // Update pos
-            pos[0] += (d00 *= invDenom);
-            pos[2] += (d01 *= invDenom);
-            margin_radius += 0.01f;
+            node->dx = (d00 *= invDenom);
+            node->dz = (d01 *= invDenom);
+            node->node.priority = node->dx*node->dx + node->dz*node->dz;
+            node->node.priority -= 100000;
+            node->cornerThresholded = 0;
+            node->surf = surf;
 
             if ((d00 * surf->normal.x) + (d01 * surf->normal.z) < (corner_threshold * offset)) {
-                continue;
+                node->cornerThresholded = 1;
+                node->node.priority -= 100000;
             }
+
+            pairingheap_add(&root, &node->node);
         } else {
+            struct CollectedNode* node = &nodes[nextNode++];
+            if (nextNode > sizeof(nodes) / sizeof(*nodes))
+                break;
+
             // Update pos
-            pos[0] += surf->normal.x * (radius - offset);
-            pos[2] += surf->normal.z * (radius - offset);
-        }
+            f32 dx = surf->normal.x * (radius - offset);
+            f32 dz = surf->normal.z * (radius - offset);
 
-        // Has collision
-        if (data->numWalls < MAX_REFERENCED_WALLS) {
-            data->walls[data->numWalls++] = surf;
-        }
-        numCols++;
+            node->dx = dx;
+            node->dz = dz;
 
-        if (gCollisionFlags & COLLISION_FLAG_RETURN_FIRST) {
+            node->node.priority = dx*dx + dz*dz;
+            node->cornerThresholded = 0;
+            node->surf = surf;
+
+            pairingheap_add(&root, &node->node);
+        }
+    }
+
+    struct Find1Result result;
+    if (pairingheap_is_empty(&root))
+    {
+        result.surf = NULL;
+    }
+    else
+    {
+        struct CollectedNode* best = (struct CollectedNode*) pairingheap_first(&root);
+        result.surf = best->surf;
+        result.dx = best->dx;
+        result.dz = best->dz;
+        result.cornerThresholded = best->cornerThresholded;
+    }
+
+    return result;
+}
+
+/**
+ * Iterate through the list of walls until all walls are checked and
+ * have given their wall push.
+ */
+static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode, struct WallCollisionData *data) {
+    Vec3f pos = { data->x, data->y + data->offsetY, data->z };
+
+    int numCols = 0;
+    for (int i = 0; i < MAX_REFERENCED_WALLS; i++)
+    {
+        struct Find1Result result = find_wall_collisions_from_list1(surfaceNode, data->radius, pos);
+        if (!result.surf)
             break;
+
+        if (!result.cornerThresholded)
+        {
+            if (data->numWalls < MAX_REFERENCED_WALLS)
+            {
+                data->walls[data->numWalls++] = result.surf;
+            }
+            numCols++;
         }
+
+        pos[0] += result.dx;
+        pos[2] += result.dz;
     }
 
     data->x = pos[0];
