@@ -180,7 +180,7 @@ static inline ALWAYS_INLINE struct Find1Result find_wall_collisions_from_list1(s
             node->dx = dx;
             node->dz = dz;
 
-            node->node.priority = dx*dx + dz*dz;
+            node->node.priority = -offset;
             node->cornerThresholded = 0;
             node->surf = surf;
 
