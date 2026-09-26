@@ -2879,7 +2879,8 @@ void update_camera(struct Camera *c) {
                     set_cam_angle(CAM_ANGLE_MARIO);
                 } else {
                     set_cam_angle(CAM_ANGLE_LAKITU);
-                    s8DirModeYawOffset = snap_to_45_degrees_flip(gMarioStates->faceAngle[1]);
+                    if (!ForceParaCam)
+                        s8DirModeYawOffset = snap_to_45_degrees_flip(gMarioStates->faceAngle[1]);
                 }
             }
         }
