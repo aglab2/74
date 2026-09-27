@@ -6,7 +6,7 @@
 #include "levels/intro/header.h"
 
 #include "make_const_nonconst.h"
-// #define TEST_LEVEL LEVEL_WDW
+#define TEST_LEVEL LEVEL_CASTLE_GROUNDS
 
 extern const LevelScript level_main_scripts_entry[];
 const LevelScript level_script_entry[] = {
