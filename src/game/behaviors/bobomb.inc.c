@@ -420,11 +420,14 @@ void bobomb_buddy_actions(void) {
             break;
     }
 
-    set_object_visibility(o, 3000);
+    if (o->oBobombBuddyRole == BOBOMB_BUDDY_ROLE_CANNON) {
+        set_object_visibility(o, 10000);
+    } else {
+        set_object_visibility(o, 3000);
+    }
 }
 
 void bhv_bobomb_buddy_loop(void) {
-    o->oDrawingDistance = 10000.f;
     bobomb_buddy_actions();
 
     curr_obj_random_blink(&o->oBobombBuddyBlinkTimer);
