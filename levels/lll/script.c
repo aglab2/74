@@ -20,6 +20,8 @@
 #define lll_area_1_collision col_lll_1_0xe019480
 extern const GeoLayout Geo_lll_1_0x21c1700[];
 #define lll_area_1 Geo_lll_1_0x21c1700
+
+extern const BehaviorScript bhvPushableMetalBoxStatic[];
 /* Fast64 end persistent block [scripts] */
 
 const LevelScript level_lll_entry[] = {
@@ -92,9 +94,9 @@ OBJECT_WITH_ACTS(223,3628,-352,-733,0,0,0,0x0, bhvChuckya,31),
 OBJECT_WITH_ACTS(107,-1413,-2779,-5260,0,0,0,0x0, bhvWoodenPost,31),
 OBJECT_WITH_ACTS(0,1369,-2779,-3012,0,0,0,0x0, bhvGoombaTripletSpawner,31),
 OBJECT_WITH_ACTS(0,2490,-1030,4396,0,0,0,0x0, bhvGoombaTripletSpawner,31),
-OBJECT_WITH_ACTS(217,-289,-299,-4313,0,0,0,0x0, bhvPushableMetalBox,31),
+OBJECT_WITH_ACTS(217,-289,-299,-4313,0,0,0,0x0, bhvPushableMetalBoxStatic,31),
 OBJECT_WITH_ACTS(220,-490,3698,-766,0,0,0,0x0, bhvFlyGuy,31),
-OBJECT_WITH_ACTS(217,-409,7408,8,0,330,0,0x0, bhvPushableMetalBox,31),
+OBJECT_WITH_ACTS(217,-409,7408,8,0,330,0,0x0, bhvPushableMetalBoxStatic,31),
 OBJECT_WITH_ACTS(25,3955,-1030,4330,0,0,0,0x0, bhvTree,31),
 OBJECT_WITH_ACTS(25,707,-1030,5794,0,0,0,0x0, bhvTree,31),
 OBJECT_WITH_ACTS(25,1313,-1030,5962,0,0,0,0x0, bhvTree,31),
@@ -124,7 +126,7 @@ OBJECT_WITH_ACTS(84,1524,-60,-1440,0,0,0,0x0, bhvSpindrift,31),
 OBJECT_WITH_ACTS(84,442,142,-1674,0,0,0,0x0, bhvSpindrift,31),
 OBJECT_WITH_ACTS(84,-586,337,-1164,0,0,0,0x0, bhvSpindrift,31),
 OBJECT_WITH_ACTS(120,-707,3177,505,0,0,0,0x0, bhvRecoveryHeart,31),
-OBJECT_WITH_ACTS(217,2676,-770,1677,0,-24,0,0x0, bhvPushableMetalBox,31),
+OBJECT_WITH_ACTS(217,2676,-770,1677,0,-24,0,0x0, bhvPushableMetalBoxStatic,31),
 OBJECT_WITH_ACTS(0,-1938,-2240,-2022,0,0,0,0x110000, bhvCoinFormation,31),
 OBJECT_WITH_ACTS(0,-1666,-1406,3365,0,0,0,0x110000, bhvCoinFormation,31),
 OBJECT_WITH_ACTS(0,-843,-1094,4521,0,355,0,0x110000, bhvCoinFormation,31),
@@ -136,9 +138,9 @@ OBJECT_WITH_ACTS(0,1615,-990,3542,0,0,0,0x20000, bhvCoinFormation,31),
 OBJECT_WITH_ACTS(212,1358,10677,1301,0,0,0,0x0, bhv1Up,31),
 OBJECT_WITH_ACTS(212,1534,10677,1077,0,0,0,0x0, bhv1Up,31),
 OBJECT_WITH_ACTS(137,949,-672,6221,0,0,0,0x0, bhvExclamationBox,32),
-OBJECT_WITH_ACTS(217,-585,-299,-4606,0,0,0,0x0, bhvPushableMetalBox,31),
-OBJECT_WITH_ACTS(217,-585,-300,-4313,0,0,0,0x0, bhvPushableMetalBox,31),
-OBJECT_WITH_ACTS(217,-289,-300,-4606,0,0,0,0x0, bhvPushableMetalBox,31),
+OBJECT_WITH_ACTS(217,-585,-299,-4606,0,0,0,0x0, bhvPushableMetalBoxStatic,31),
+OBJECT_WITH_ACTS(217,-585,-300,-4313,0,0,0,0x0, bhvPushableMetalBoxStatic,31),
+OBJECT_WITH_ACTS(217,-289,-300,-4606,0,0,0,0x0, bhvPushableMetalBoxStatic,31),
 WARP_NODE(10,9,1,10,0),
 WARP_NODE(11,9,1,12,0),
 WARP_NODE(12,9,1,11,0),
