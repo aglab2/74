@@ -60,7 +60,7 @@ struct Find1Context
     f32 best;
 };
 
-static void  __attribute__((optimize("O0"))) visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos, const f32 margin_radius)
+static void visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos, const f32 margin_radius)
 {
     int use_edge_collision = gCurrCourseNum != COURSE_JRB;
     const f32 corner_threshold = -0.9f;
@@ -180,7 +180,7 @@ static void  __attribute__((optimize("O0"))) visit_walls_from_list(struct Find1C
     }
 }
 
-static struct Find1Result __attribute__((optimize("O0"))) find_best_wall(const Vec3f pos, f32 radius, const f32 margin_radius)
+static struct Find1Result find_best_wall(const Vec3f pos, f32 radius, const f32 margin_radius)
 {
     f32 x = pos[0];
     f32 z = pos[2];
@@ -219,7 +219,7 @@ static struct Find1Result __attribute__((optimize("O0"))) find_best_wall(const V
  * Iterate through the list of walls until all walls are checked and
  * have given their wall push.
  */
-static inline __attribute__((optimize("O0"))) s32 find_wall_collisions_impl(struct WallCollisionData *data) {
+static inline s32 find_wall_collisions_impl(struct WallCollisionData *data) {
     struct Surface* reported_surfaces[100];
     int reported_surfaces_count = 0;
     f32 radius = data->radius;
