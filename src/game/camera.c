@@ -1106,6 +1106,15 @@ static inline s16 snap_to_45_degrees_flip(s32 angle) {
     return (angle + 0x9000) & 0xe000;
 }
 
+static inline int adjustment_angle(int repeats)
+{
+    int slow = DEGREES(0.5);
+    int fast = DEGREES(2);
+    if (repeats <= 10) return slow;
+    if (repeats >= 10+32) return fast;
+    return slow + (fast - slow) * (repeats - 10) / 32;
+}
+
 /**
  * A mode that only has 8 camera angles, 45 degrees apart
  */
@@ -1114,6 +1123,10 @@ void mode_8_directions_camera(struct Camera *c) {
     s16 oldAreaYaw = sAreaYaw;
 
     radial_camera_input(c);
+
+    static int Repeating = 0;
+
+    int rotating = 0;
 
     if (gPlayer1Controller->buttonPressed & R_CBUTTONS) {
         s8DirModeYawOffset += DEGREES(45);
@@ -1130,15 +1143,26 @@ void mode_8_directions_camera(struct Camera *c) {
         s8DirModeYawOffset = gMarioState->faceAngle[1] - 0x8000;
     }
     else if (gPlayer1Controller->buttonDown & L_JPAD) {
-        s8DirModeYawOffset -= DEGREES(2);
+        s8DirModeYawOffset -= adjustment_angle(Repeating);
+        rotating = 1;
     }
     else if (gPlayer1Controller->buttonDown & R_JPAD) {
-        s8DirModeYawOffset += DEGREES(2);
+        s8DirModeYawOffset += adjustment_angle(Repeating);
+        rotating = 1;
     }
     else if (gPlayer1Controller->buttonPressed & D_JPAD) {
         s8DirModeYawOffset = snap_to_45_degrees(s8DirModeYawOffset);
     }
 #endif
+
+    if (rotating)
+    {
+        Repeating++;
+    }
+    else
+    {
+        Repeating = 0;
+    }
 
     lakitu_zoom(400.f, 0x900);
     c->nextYaw = update_8_directions_camera(c, c->focus, pos);
