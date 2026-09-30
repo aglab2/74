@@ -20,6 +20,8 @@
 #define ccm_area_1_collision col_ccm_1_0xe027a58
 extern const GeoLayout Geo_ccm_1_0x12e1700[];
 #define ccm_area_1 Geo_ccm_1_0x12e1700
+
+extern const BehaviorScript bhvPushableMetalBoxStatic[];
 /* Fast64 end persistent block [scripts] */
 
 const LevelScript level_ccm_entry[] = {
@@ -110,6 +112,7 @@ OBJECT_WITH_ACTS(212,1375,-104,3770,0,0,0,0x0, bhv1Up,31),
 OBJECT_WITH_ACTS(212,-4992,1230,299,0,0,0,0x0, bhv1Up,31),
 OBJECT_WITH_ACTS(100,-3532,-900,-2959,0,0,0,0x0, bhvPiranhaPlant,31),
 OBJECT_WITH_ACTS(0,-4430,0,3430,0,0,0,0x0, bhvCoinFormation,31),
+OBJECT_WITH_ACTS(217,-4524,732,-5224,0,0,0,0x0, bhvPushableMetalBoxStatic,31),
 
 WARP_NODE(10,9,1,10,0),
 WARP_NODE(11,9,1,12,0),
