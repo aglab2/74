@@ -1,6 +1,4 @@
 // metal_box.inc.c
-#include "game/options_menu.h"
-
 struct ObjectHitbox sMetalBoxHitbox = {
     /* interactType:      */ INTERACT_NONE,
     /* downOffset:        */ 0,
