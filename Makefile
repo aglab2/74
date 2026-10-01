@@ -101,7 +101,7 @@ TARGET := sm64
 #   l3dex2  - F3DEX2 version that only renders in wireframe
 #   f3dzex  - newer, experimental microcode used in Animal Crossing
 #   super3d - extremely experimental version of Fast3D lacking many features for speed
-GRUCODE ?= f3dex3
+GRUCODE ?= f3dzex
 $(eval $(call validate-option,GRUCODE,f3dex f3dex2 f3dex2pl f3dzex super3d l3dex2 f3dex3))
 
 ifeq ($(GRUCODE),f3dex) # Fast3DEX
@@ -137,7 +137,7 @@ endif
 #==============================================================================#
 
 # Default non-gcc opt flags
-DEFAULT_OPT_FLAGS = -Os -gdwarf-4
+DEFAULT_OPT_FLAGS = -Os -gdwarf-4 -freorder-blocks-algorithm=simple -fno-jump-tables -falign-functions=32 -fno-inline -finline-limit=0
 # Note: -fno-associative-math is used here to suppress warnings, ideally we would enable this as an optimization but
 # this conflicts with -ftrapping-math apparently.
 # TODO: Figure out how to allow -fassociative-math to be enabled
