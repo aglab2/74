@@ -145,6 +145,10 @@ static void visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *
             }
 
             f32 priority = invDenom;
+            if (gCurrCourseNum == COURSE_NONE)
+            {
+                priority = -priority;
+            }
 
             // Check collision
             if (FLT_IS_NONZERO(invDenom)) {
@@ -167,6 +171,11 @@ static void visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *
             }
         } else {
             f32 priority = offset <= 0.f ? offset + 100.f : offset;
+            if (gCurrCourseNum == COURSE_NONE)
+            {
+                priority = -priority;
+            }
+
             if (priority < ctx->best)
             {
                 result->dx = surf->normal.x * (radius - offset);
