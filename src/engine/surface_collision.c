@@ -164,9 +164,13 @@ static void visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *
                 } else {
                     result->cornerThresholded = 0;
                 }
+
+                if (gCurrCourseNum == COURSE_NONE)
+                    break;
             }
         } else {
             f32 priority = offset <= 0.f ? offset + 100.f : offset;
+
             if (priority < ctx->best)
             {
                 result->dx = surf->normal.x * (radius - offset);
@@ -175,6 +179,9 @@ static void visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *
                 result->surf = surf;
                 result->cornerThresholded = 0;
                 result->edge = 0;
+
+                if (gCurrCourseNum == COURSE_NONE)
+                    break;
             }
         }
     }

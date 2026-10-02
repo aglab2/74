@@ -252,7 +252,7 @@ JUMP_LINK(script_func_global_16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 	FREE_LEVEL_POOL(),
-	MARIO_POS(1, 0, 1000, 10000, 0),
+	MARIO_POS(1, 0, 1000, 0, 0),
 	CALL(0, lvl_init_or_update),
 	CALL_LOOP(1, lvl_init_or_update),
 	CLEAR_LEVEL(),
