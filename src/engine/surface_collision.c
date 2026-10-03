@@ -62,7 +62,7 @@ struct Find1Context
 
 static void visit_walls_from_list(struct Find1Context* ctx, struct SurfaceNode *surfaceNode, f32 radius, const Vec3f pos, const f32 margin_radius)
 {
-    int use_edge_collision = gCurrCourseNum != COURSE_JRB;
+    const int use_edge_collision = 0;
     const f32 corner_threshold = -0.9f;
     struct Surface *surf;
     f32 offset;
