@@ -319,7 +319,6 @@ void save_file_do_save(s32 fileIndex) {
         // Write to EEPROM
         write_eeprom_data(&gSaveBuffer.files[fileIndex], sizeof(gSaveBuffer.files[fileIndex]));
 
-        gTimerOffset = gGlobalTimer;
         gSaveFileModified = FALSE;
     }
 
@@ -330,6 +329,7 @@ void save_file_erase(s32 fileIndex) {
     touch_high_score_ages(fileIndex);
     bzero(&gSaveBuffer.files[fileIndex][0], sizeof(gSaveBuffer.files[fileIndex][0]));
 
+    gTimerOffset = gGlobalTimer;
     gSaveFileModified = TRUE;
     save_file_do_save(fileIndex);
 }
@@ -339,6 +339,7 @@ void save_file_copy(s32 srcFileIndex, s32 destFileIndex) {
     bcopy(&gSaveBuffer.files[srcFileIndex][0], &gSaveBuffer.files[destFileIndex][0],
           sizeof(gSaveBuffer.files[destFileIndex][0]));
 
+    gTimerOffset = gGlobalTimer;
     gSaveFileModified = TRUE;
     save_file_do_save(destFileIndex);
 }
